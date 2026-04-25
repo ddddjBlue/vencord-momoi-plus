@@ -22,6 +22,10 @@ FILE_STRUCTURE = {
         "aoba": "aoba.ogg",
         "miyu": "miyu.ogg",
         "aris": "aris.ogg",
+        "kei": "kei.ogg",
+        "erika": "erika.ogg",
+        "izuna": "izuna.ogg",
+        "kanoe": "kanoe.ogg",
         "atsuko": "atsuko.ogg",
         "shiroko": "shiroko.ogg",
         "moyai": "moyai.ogg",
@@ -31,6 +35,7 @@ FILE_STRUCTURE = {
         "arona": [f"arona_{i}.ogg" for i in range(1, 3)],
         "yuuka": [f"yuuka_{i}.ogg" for i in range(1, 4)],
         "koharu": [f"koharu_{i}.ogg" for i in range(1, 3)],
+        "otogi": [f"otogi_{i}.ogg" for i in range(1, 3)],
     }
 }
 

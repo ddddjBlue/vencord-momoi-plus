@@ -85,7 +85,7 @@ export const settings = definePluginSettings({
 
 // --- PLUGIN DEFINITION ---
 const customAuthors: PluginAuthor[] = [
-    { name: "Ni", id: 1145148101919n },
+    { name: "Nin", id: 1286362631984255162n },
     { name: "JoubaMety", id: 266528098772713474n }
 ];
 const ALL_EXTRA_SOUNDS = Object.values(EXTRA_KEYWORD_BASE64).flat();
@@ -221,6 +221,6 @@ async function playKeyword(key: string) {
 
 (window as any).$getMomoiVolume = () => {
     const vol = settings.store.volume;
-    console.log("[MomoiPlus] Startup volume set to:", vol); 
+    console.log("[MomoiPlus] Startup volume set to:", vol);
     return (typeof vol === 'number') ? vol : 0.5;
 };

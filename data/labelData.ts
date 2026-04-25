@@ -25,5 +25,10 @@ export const labels: Record<string, string> = {
     "atsuko": "Atsuko",
     "mika": "Mika",
     "yuuka": "Yuuka",
-    "koharu": "Koharu"
+    "koharu": "Koharu",
+    "kei": "Kei",
+    "erika": "Who ts?",
+    "izuna": "Izuna",
+    "kanoe": "Kanoe",
+    "otogi": "Otogi"
 };
