@@ -13,12 +13,18 @@ function Write-Message {
         "Warning" { "[33m" }
         "Error" { "[31m" }
     }
-    Write-Output "$ESC[1m$ESC[37m[$ESC[33mMomoiPlus$ESC[37m] $ESC[0m$ESC$color$Message$ESC[0m"
+    Write-Output "$ESC[1m$ESC[37m[$ESC[33mMomoiPlus (Vesktop)$ESC[37m] $ESC[0m$ESC$color$Message$ESC[0m"
 }
 # check if OS is Windows
 if ($env:OS -ne "Windows_NT") {
     Write-Message "This script is intended to run on Windows."
-    exit
+    Exit 1
+}
+# check if Vesktop is installed
+$vesktopDist = "$env:APPDATA\vesktop\sessionData\vencordFiles"
+if (!(Test-Path $vesktopDist)) {
+    Write-Message "Vesktop is not installed, install it and try again."
+    Exit 2
 }
 
 $defaultRootPath = $env:TMP
@@ -28,7 +34,7 @@ $freeSpace = (Get-PSDrive -Name $driveLetter).Free
 $requiredSpace = 900MB
 if ($freeSpace -lt $requiredSpace) {
     Write-Message "Not enough disk space available. At least 900MB is required." -Level "Error"
-    exit
+    Exit 3
 }
 
 $links = @{
@@ -57,7 +63,7 @@ if (-not ($pnpmInstalled) -and -not (Test-Path -Path "$defaultRootPath\pnpm")) {
         Write-Message "pnpm installation successful." -Level "Success"
     } else {
         Write-Message "pnpm installation failed." -Level "Error"
-        exit
+        Exit 4
     }
 }
 else {
@@ -80,7 +86,7 @@ if (-not ($gitInstalled) -and -not (Test-Path -Path "$defaultRootPath\MinGit")) 
         Write-Message "MinGit installation successful." -Level "Success"
     } else {
         Write-Message "MinGit installation failed." -Level "Error"
-        exit
+        Exit 5
     }
 } else {
     if ($env:Path -notlike "*$defaultRootPath\MinGit\mingw64\bin*") {
@@ -106,7 +112,7 @@ if (-not ($nodeInstalled) -and -not (Test-Path -Path "$defaultRootPath\node")) {
         Write-Message "Node.js installation successful." -Level "Success"
     } else {
         Write-Message "Node.js installation failed." -Level "Error"
-        exit
+        Exit 6
     }
 } else {
     if ($env:Path -notlike "*$defaultRootPath\node*") {
@@ -122,7 +128,7 @@ if (-not (Test-Path -Path $defaultInstallPath)) {
     # Test
     if (-not (Test-Path -Path $defaultInstallPath)) {
         Write-Message "Failed to clone Vencord repository." -Level "Error"
-        exit
+        Exit 7
     }
     Write-Message "Cloned Vencord repository to $defaultInstallPath" -Level "Success"
 } else {
@@ -169,26 +175,35 @@ if ($?) {
     Write-Message "Dependencies installed successfully." -Level "Success"
 } else {
     Write-Message "Failed to install dependencies." -Level "Error"
-    exit
+    Exit 8
 }
 # Build Vencord
 Write-Message "Building Vencord..."
-pnpm build
+pnpm run build
 if ($?) {
     Write-Message "Vencord built successfully." -Level "Success"
 } else {
     Write-Message "Failed to build Vencord." -Level "Error"
-    exit
+    Exit 9
 }
-# Inject Vencord
-Write-Message "Injecting Vencord..."
-pnpm inject
-if ($?) {
-    Write-Message "Vencord injected successfully." -Level "Success"
+
+# Copy dist to $vesktopDist
+Write-Message "Patching Vesktop..."
+$sourceDist = Join-Path -Path $defaultInstallPath -ChildPath "dist"
+if (Test-Path -Path $sourceDist) {
+    try {
+        Copy-Item -Path "$sourceDist\*" -Destination $vesktopDist -Recurse -Force
+    }
+    catch {
+        Write-Message "Error patching Vesktop: $_" -Level "Error"
+        Exit 10
+    }
+    Write-Message "Successfully patched Vesktop." -Level "Success"
 } else {
-    Write-Message "Failed to inject Vencord." -Level "Error"
+    Write-Message "Vencord build not found. Cannot copy files." -Level "Error"
+    Exit 11
 }
-Write-Message "Discord was shut off during injection, you will have to start it up manually." -Level "Warning"
+Write-Message "Restart Vesktop (via tray) to apply changes." -Level "Warning"
 Write-Message "To enable MomoiPlus plugin, go to Settings > Plugins > MomoiPlus, restart Discord and enjoy." -Level "Info"
 Write-Output "$ESC[35mLife... is Kuyashi.$ESC[0m"
 # Return to original location
