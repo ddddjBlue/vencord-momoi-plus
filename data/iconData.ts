@@ -16,7 +16,7 @@ export const ICON_BASE64: Record<string, string> = {
     "yuuka": "https://cdn.discordapp.com/emojis/1272143959291986020.webp?size=240&animated=true",
     "koharu": "https://cdn.discordapp.com/emojis/1291829031985217630.webp?size=240&animated=true",
     "kei": "https://cdn.discordapp.com/emojis/1467162062286356490.webp?size=240&animated=true",
-    "erika": "https://cdn.discordapp.com/emojis/1487850305189183559.webp?size=240",
+    "erika": "https://cdn.discordapp.com/emojis/1337996720805515274.webp?size=240",
     "izuna": "https://cdn.discordapp.com/emojis/1028641400717320352.webp?size=240&animated=true",
     "kanoe": "https://cdn.discordapp.com/emojis/1421035859775586326.webp?size=240",
     "otogi": "https://cdn.discordapp.com/emojis/1280029378738262047.webp?size=240&animated=true"
