@@ -6,7 +6,8 @@
 
 import { classNameFactory } from "@api/Styles";
 import { Flex } from "@components/Flex";
-import { Clickable, Text } from "@webpack/common";
+import { Clickable } from "@webpack/common";
+import { Text } from "@components/Text";
 
 import { ICON_BASE64 } from "../data/iconData";
 import { toggleableKeywords } from "../data/keywordData";
@@ -26,7 +27,7 @@ function renderSwitch(keyword: string, isDisabled: boolean, handleToggle: () => 
                 <img
                     src={ICON_BASE64[keyword]}
                 />
-                <Text variant="heading-lg/semibold">
+                <Text size="lg" weight="semibold">
                     {labels[keyword]}
                 </Text>
             </Flex>
@@ -46,8 +47,8 @@ export function ExtrasComponent() {
 
     return (
         <div className={cl("extrasComponent")}>
-            <Text variant="heading-xl/semibold">Extras</Text>
-            <Text variant="text-sm/normal">Toggle Extra triggers</Text>
+            <Text size="xl" weight="semibold">Extras</Text>
+            <Text size="sm">Toggle Extra triggers</Text>
             <Flex className={cl("CharacterList")}>
                 {toggleableKeywords.map(keyword => (
                     <div key={keyword}>
