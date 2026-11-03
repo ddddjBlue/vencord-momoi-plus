@@ -24,6 +24,7 @@
     color: inherit;
     transition: background-color 0.2s ease, outline 0.2s ease, color 0.2s ease;
     border-radius: 10%;
+    cursor: pointer;
 
     img {
         border-radius: 10%;
@@ -49,4 +50,31 @@
         opacity: 0.75;
         transition: opacity 0.2s ease;
     }
+}
+
+/* Discord gives each slider marker 24px for its label, which wraps "CHAOS" and "1000" */
+.vc-momoiPlus-cooldown [class*="mark_"] {
+    width: max-content;
+    margin-left: 0;
+    transform: translateX(-50%);
+}
+
+.vc-momoiPlus-cooldown [class*="markValue"] {
+    width: auto;
+    white-space: nowrap;
+}
+
+.vc-btn-base.vc-momoiPlus-extrasAction {
+    min-width: auto;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--text-normal, #dbdee1);
+    background-color: transparent;
+    border: 1px solid var(--background-mod-subtle);
+}
+
+.vc-btn-base.vc-momoiPlus-extrasAction:hover {
+    color: var(--text-normal, #dbdee1);
+    background-color: var(--background-mod-normal);
+    border-color: var(--background-mod-subtle);
 }
